@@ -10,6 +10,7 @@ namespace :ferret do
       indexes = ENV['INDEXES'].split
       indexes.each do |index_name|
         start = 1.minute.ago
+        Rails.application.eager_load! if defined?(Rails)
         ActsAsFerret::rebuild_index index_name
         idx = ActsAsFerret::get_index index_name
         # update records that have changed since the rebuild started
